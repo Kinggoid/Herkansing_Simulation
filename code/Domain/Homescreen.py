@@ -1,13 +1,18 @@
+from .Coffee import Coffee
+from .Coffeescreen import Coffeescreen
+
+
 class Homescreen:
-    def __init__(self, coffees, prices):
-        self.coffees = coffees
-        self.prices = prices
+    _price_paid = 0
+
+
+    def __init__(self, coffees):
+        self._coffees = coffees
 
     def pay_cash(self, money):
         """Pay your coffee in cash"""
-        self.paid = money
+        self._price_paid += money
 
-    def select_coffee(self):
-        while True:
+    def get_price_paid(self):
+        return self._price_paid
 
-            break

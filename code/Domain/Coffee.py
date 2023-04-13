@@ -5,13 +5,13 @@ class Coffee:
         self._name = coffee
         self._price = price
 
-    def name(self):
+    def get_name(self):
         return self._name
 
     def set_name(self, coffee):
         self._name = coffee
 
-    def price(self):
+    def get_price(self):
         return self._price
 
     def set_price(self, price):
