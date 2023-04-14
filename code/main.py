@@ -1,19 +1,14 @@
-from Domain.Coffee import Coffee
-from Domain.Coffeescreen import Coffeescreen
-from Domain.Homescreen import Homescreen
-
-a = Coffee("hello", 1)
-print(a)
+import domain
 
 coffees = ["Cappuchino", "Espresso", "Latte", "Black"]
 prices = [4,3,2,1]
 
-hs = Homescreen(coffees)
+hs = domain.Homescreen(coffees)
 
 coffees_in_machine = []
 
 for i in range(len(coffees)):
-    coffees_in_machine.append(Coffeescreen(hs, Coffee(coffees[i], prices[i])))
+    coffees_in_machine.append(domain.Coffeescreen(hs, domain.Coffee(coffees[i], prices[i])))
 
 while True:
     print("These are the coffees that are currently available: ")
