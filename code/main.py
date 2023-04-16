@@ -1,29 +1,34 @@
 import domain
 import simulation
-import simulation.setSimulation as setsim
+from simulation.setSimulation import StatesHandler
 
 
-coffees = ["Cappuchino", "Espresso", "Latte", "Black"]
-prices = [4,3,2,1]
+def main():
+    # Coffees and prices
+    coffees = ["Cappuchino", "Espresso", "Latte", "Black"]
+    prices = [4, 3, 2, 1]
 
-cm = domain.Coffeemachine(coffees, prices)
+    # Example user
+    user = domain.Person("Kuno", 5)
 
-q0 = simulation.State("q0", setsim.q1, startstate=1)
-q1 = simulation.State("q1", setsim.q2, endstate=1)
-# q2 = simulation.State("q2")
-# q3 = simulation.State("q3")
-# q4 = simulation.State("q4")
-# q5 = simulation.State("q5", endstate=1)
+    # Create coffeemachine
+    cm = domain.Coffeemachine(coffees, prices)
+
+    # Couple user and machine
+    handler = StatesHandler(cm, user)
+
+    # Initialize simulation
+    fsm = simulation.StateMachine(cm, handler)
+
+    # Example FSM simulation command
+    cargo = "TURN_ON.CHOOSE_COFFEE.CAPPUCHINO.PAY.0.CHOOSE_DIFFERENT_COFFEE.CHOOSE_COFFEE.BLACK.BUY.PAY.5.BUY.CHANGE.STOP"
+
+    # Run simulation
+    fsm.run(cargo)
+
+    # Show results
+    print(user)
 
 
-fsm = simulation.StateMachine([q0, q1])
-
-sim = "PAY.20"
-fsm.run(sim, cm)
-
-
-
-# cff = coffees_in_machine[0]
-# q1.choose_option(0, 20, cff)
-
+main()
 
