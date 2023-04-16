@@ -4,9 +4,10 @@ class Coffeescreen:
         self.coffee = coffee
 
     def pay_coffee(self):
-        difference = self.hs.coffeemachine.get_price_paid() - self.coffee.get_price()
+        to_pay = self.coffee.get_price()
+        difference = self.hs.coffeemachine.get_price_paid() - to_pay
         if difference >= 0:
-            self.hs.coffeemachine.new_balance(difference)
+            self.hs.coffeemachine.new_balance(to_pay)
             return True
         return False
 

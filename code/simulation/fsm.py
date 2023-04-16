@@ -12,6 +12,7 @@ class StateMachine:
         state = "q0"
 
         while True:
+            print(state, cargo)
             if state == "END":
                 return self.base.get_price_paid(), self.base.hs.chosen_coffee.coffee.get_name()
             state, cargo = self.states.handle(state, cargo)

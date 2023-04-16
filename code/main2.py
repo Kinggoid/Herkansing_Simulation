@@ -11,8 +11,9 @@ handler = StatesHandler(cm, harry)
 
 fsm = simulation.StateMachine(cm, handler)
 
-cargo = "TURN_ON.PAY.10.CHANGE.PAY.5.CHOOSE_COFFEE.CAPPUCHINO.PAY.5.CHOOSE_DIFFERENT_COFFEE.CHOOSE_COFFEE.BLACK.BUY.CHANGE.STOP"
-fsm.run(cargo)
+cargo = "TURN_ON.CHOOSE_COFFEE.CAPPUCHINO.PAY.0.CHOOSE_DIFFERENT_COFFEE.CHOOSE_COFFEE.BLACK.BUY.PAY.5.BUY.CHANGE.STOP"
+print(fsm.run(cargo))
+print(harry.get_pocket_change())
 
 
 

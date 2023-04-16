@@ -32,21 +32,17 @@ class StatesHandler:
     def q1(self, command, cargo):
         if command == "PAY":
             money = cargo[0]
-
             try:
                 money = float(money)
             except:
-                raise ValueError("This command: '" + command + "' doesn't correctly specify money.")
-
+                raise ValueError("This command: '" + money + "' doesn't correctly specify money.")
             if self.user.lose_cash(money):
                 self.machine.pay_cash(money)
                 return ["q1", cargo[1:]]
             raise ValueError("User doesn't have enough money to pay this amount.")
-
         elif command == "CHANGE":
-            self.machine.pay_back_change()
+            self.user.gain_cash(self.machine.pay_back_change())
             return "q1", cargo
-
         elif command == "CHOOSE_COFFEE":
             coffee = cargo[0]
             self.machine.hs.choose_coffee(coffee)
@@ -57,21 +53,20 @@ class StatesHandler:
     def q2(self, command, cargo):
         if command == "PAY":
             money = cargo[0]
-
             try:
                 money = float(money)
             except:
-                raise ValueError("This command: '" + command + "' doesn't correctly specify money.")
-
+                raise ValueError("This command: '" + money + "' doesn't correctly specify money.")
             if self.user.lose_cash(money):
                 self.machine.pay_cash(money)
                 return ["q2", cargo[1:]]
             raise ValueError("User doesn't have enough money to pay this amount.")
-
+        elif command == "CHANGE":
+            self.user.gain_cash(self.machine.pay_back_change())
+            return "q2", cargo
         elif command == "CHOOSE_DIFFERENT_COFFEE":
             self.machine.hs.unchoose_coffee()
             return "q1", cargo
-
         elif command == "BUY":
             return "q3", cargo
         else:
@@ -89,7 +84,7 @@ class StatesHandler:
 
     def q5(self, command, cargo):
         if command == "CHANGE":
-            self.machine.pay_back_change()
+            self.user.gain_cash(self.machine.pay_back_change())
             return "q5", cargo
         elif command == "STOP":
             return "END", None
