@@ -1,4 +1,6 @@
 class Person:
+    coffee = None
+
     def __init__(self, name, pocket_change):
         self.name = name
         self.pocket_change = pocket_change
@@ -18,3 +20,6 @@ class Person:
 
     def gain_cash(self, money):
         self.pocket_change += money
+
+    def gain_coffee(self, coffee):
+        self.coffee = coffee
