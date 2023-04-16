@@ -1,7 +1,3 @@
-class InitializationError(Exception):
-    pass
-
-
 class StateMachine:
     def __init__(self, base, states):
         self.base = base
@@ -12,7 +8,6 @@ class StateMachine:
         state = "q0"
 
         while True:
-            print(state, cargo)
             if state == "END":
-                return self.base.get_price_paid(), self.base.hs.chosen_coffee.coffee.get_name()
-            state, cargo = self.states.handle(state, cargo)
+                break
+            state, cargo = self.states.handler(state, cargo)
