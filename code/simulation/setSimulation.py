@@ -81,6 +81,7 @@ class StatesHandler:
         chosen_coffee_name = self.machine.hs.chosen_coffee.coffee.get_name()
         made_coffee = self.machine.make_coffee(chosen_coffee_name)
         self.user.gain_coffee(made_coffee)
+        self.machine.hs.unchoose_coffee()
         return "q5", cargo
 
     def q5(self, command, cargo):
