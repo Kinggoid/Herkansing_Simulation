@@ -1,5 +1,6 @@
 from .state import State
 from code import domain
+from .setSimulation import StatesHandler
 
 
 class InitializationError(Exception):
@@ -7,34 +8,17 @@ class InitializationError(Exception):
 
 
 class StateMachine:
-    states = []
-    options = {}
-    startState = None
-    endStates = []
+    def __init__(self, base, states):
+        self.base = base
+        self.states = states
 
-    def __init__(self, states):
-        for state in states:
-            if state.startstate:
-                self.startState = state
-            elif state.endstate:
-                self.endStates.append(state)
-            self.states.append(states)
-
-    def run(self, cargo, hs):
-        # try:
-        #     handler = self.handlers[self.startState]
-        # except:
-        #     raise InitializationError("Must call .set_start() before .run()")
-        # if not self.endStates:
-        #     raise InitializationError("Must call .set_() beendfore .run(). At least one state must be an end_state")
-        state = hs
-
-        cargo = cargo.split(".", 1)
+    def run(self, cargo):
+        cargo = cargo.split(".")
+        state = "q0"
 
         while True:
-            print(cargo)
-            state = state.execute(state, cargo[0], cargo)
-            print(hs.get_price_paid())
-
-            cargo.pop(0)
+            print(cargo[0])
+            state, cargo = self.states.handle(state, cargo)
+            if state == "END":
+                return self.base.get_price_paid(), self.base.hs.chosen_coffee.get_name
 
