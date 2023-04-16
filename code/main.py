@@ -1,34 +1,29 @@
 import domain
+import simulation
+import simulation.setSimulation as setsim
+
 
 coffees = ["Cappuchino", "Espresso", "Latte", "Black"]
 prices = [4,3,2,1]
 
-hs = domain.Homescreen(coffees)
+cm = domain.Coffeemachine(coffees, prices)
 
-coffees_in_machine = []
+q0 = simulation.State("q0", setsim.q1, startstate=1)
+q1 = simulation.State("q1", setsim.q2, endstate=1)
+# q2 = simulation.State("q2")
+# q3 = simulation.State("q3")
+# q4 = simulation.State("q4")
+# q5 = simulation.State("q5", endstate=1)
 
-for i in range(len(coffees)):
-    coffees_in_machine.append(domain.Coffeescreen(hs, domain.Coffee(coffees[i], prices[i])))
 
-while True:
-    print("These are the coffees that are currently available: ")
-    for i in range(0, len(coffees_in_machine)):
-        print(str(i + 1) + ": " + coffees[i])
+fsm = simulation.StateMachine([q0, q1])
 
-    chosen_coffee_number = eval(input("\nType in the number of the coffee you want: "))
+sim = "PAY.20"
+fsm.run(sim, cm)
 
-    try:
-        correct_chosen_coffee_number = int(chosen_coffee_number) - 1
-    except:
-        print("\nError: not an available option. Try again.\n")
-        continue
 
-    if 0 > correct_chosen_coffee_number or correct_chosen_coffee_number >= len(coffees):
-        print("\nError: not an available option. Try again.\n")
-        continue
-    break
 
-chosen_coffee = coffees_in_machine[correct_chosen_coffee_number]
-chosen_coffee.pay_cash(10)
-print(chosen_coffee.make_coffee())
+# cff = coffees_in_machine[0]
+# q1.choose_option(0, 20, cff)
+
 

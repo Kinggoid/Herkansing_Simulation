@@ -1,21 +1,19 @@
 class Coffeescreen:
 
     def __init__(self, hs, coffee):
-        self._hs = hs
-        self._coffee = coffee
+        self.hs = hs
+        self.coffee = coffee
 
-    def pay_cash(self, money):
-        """Pay your coffee in cash"""
-        self._hs.pay_cash(money)
-
-    def get_price_paid(self):
-        return self._hs.get_price_paid()
-
-    def make_coffee(self):
-        if self._hs.get_price_paid() >= self._coffee.get_price():
+    def pay_coffee(self):
+        difference = self.hs.get_price_paid() - self.coffee.get_price()
+        if difference >= 0:
+            self.hs.new_balance(difference)
             return True
         return False
 
+    def choose_different_coffee(self):
+        return self.hs
+
     def __repr__(self):
-        return f"Coffeescreen(coffee='{self._coffee.get_name()}', price='{self._coffee.get_price()}', paid='{self._hs.get_price_paid()})"
+        return f"Coffeescreen(coffee='{self.coffee.get_name()}', price='{self.coffee.get_price()}', paid='{self.hs.get_price_paid()})"
 

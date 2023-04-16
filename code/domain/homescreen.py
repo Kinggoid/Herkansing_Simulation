@@ -1,20 +1,20 @@
 from .coffee import Coffee
 from .coffeescreen import Coffeescreen
+from .coffeemachine import Coffeemachine
 
 
 class Homescreen:
-    _price_paid = 0
+    coffeescreens = {}
 
-    def __init__(self, coffees):
-        self._coffees = coffees
+    def __init__(self, machine):
+        self.coffeemachine = machine
 
-    def pay_cash(self, money):
-        """Pay your coffee in cash"""
-        self._price_paid += money
+    def add_coffees(self, coffeescreens):
+        for coffeescreen in coffeescreens:
+            self.coffeescreens[coffeescreen.coffee.get_name()] = coffeescreen
 
-    def get_price_paid(self):
-        return self._price_paid
+    def remove_coffee(self, coffee):
+        self.coffeescreens.pop(coffee)
 
-    def __repr__(self):
-        return f"Homescreen(price_paid='{self._price_paid}')"
-
+    def choose_coffee(self, coffee):
+        return self.coffeescreens[coffee]

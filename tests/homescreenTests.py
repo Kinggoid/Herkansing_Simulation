@@ -8,5 +8,5 @@ class DefaultWidgetSizeTestCase(unittest.TestCase):
         hs.pay_cash(2)
         hs.pay_cash(4)
 
-        self.assertEqual(hs._price_paid, 6)
+        self.assertEqual(hs.price_paid, 6)
         

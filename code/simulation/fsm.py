@@ -1,35 +1,40 @@
+from .state import State
+from code import domain
+
+
 class InitializationError(Exception):
     pass
 
 
 class StateMachine:
+    states = []
+    options = {}
+    startState = None
+    endStates = []
 
-    def __init__(self):
-        self.handlers = {}
-        self.startState = None
-        self.endStates = []
+    def __init__(self, states):
+        for state in states:
+            if state.startstate:
+                self.startState = state
+            elif state.endstate:
+                self.endStates.append(state)
+            self.states.append(states)
 
-    def add_state(self, name, handler, end_state=0):
-        name = name.upper()
-        self.handlers[name] = handler
-        if end_state:
-            self.endStates.append(name)
+    def run(self, cargo, hs):
+        # try:
+        #     handler = self.handlers[self.startState]
+        # except:
+        #     raise InitializationError("Must call .set_start() before .run()")
+        # if not self.endStates:
+        #     raise InitializationError("Must call .set_() beendfore .run(). At least one state must be an end_state")
+        state = hs
 
-    def set_start(self, name):
-        self.startState = name.upper()
-
-    def run(self, cargo):
-        try:
-            handler = self.handlers[self.startState]
-        except:
-            raise InitializationError("must call .set_start() before .run()")
-        if not self.endStates:
-            raise InitializationError("at least one state must be an end_state")
+        cargo = cargo.split(".", 1)
 
         while True:
-            (newState, cargo) = handler(cargo)
-            if newState.upper() in self.endStates:
-                print("reached ", newState)
-                break
-            else:
-                handler = self.handlers[newState.upper()]    
+            print(cargo)
+            state = state.execute(state, cargo[0], cargo)
+            print(hs.get_price_paid())
+
+            cargo.pop(0)
+
