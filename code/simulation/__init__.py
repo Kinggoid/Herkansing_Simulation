@@ -1,3 +1,3 @@
-from .fsm2 import StateMachine
+from .fsm import StateMachine
 from .state import State
 
