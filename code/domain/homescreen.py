@@ -1,10 +1,6 @@
-from .coffee import Coffee
-from .coffeescreen import Coffeescreen
-from .coffeemachine import Coffeemachine
-
-
 class Homescreen:
     coffeescreens = {}
+    chosen_coffee = None
 
     def __init__(self, machine):
         self.coffeemachine = machine
@@ -17,4 +13,7 @@ class Homescreen:
         self.coffeescreens.pop(coffee)
 
     def choose_coffee(self, coffee):
-        return self.coffeescreens[coffee]
+        self.chosen_coffee = self.coffeescreens[coffee]
+
+    def unchoose_coffee(self):
+        self.chosen_coffee = None

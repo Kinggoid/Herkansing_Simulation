@@ -1,5 +1,4 @@
 class Coffeescreen:
-
     def __init__(self, hs, coffee):
         self.hs = hs
         self.coffee = coffee
@@ -12,7 +11,7 @@ class Coffeescreen:
         return False
 
     def choose_different_coffee(self):
-        return self.hs
+        self.hs.unchoose_coffee()
 
     def __repr__(self):
         return f"Coffeescreen(coffee='{self.coffee.get_name()}', price='{self.coffee.get_price()}', paid='{self.hs.get_price_paid()})"

@@ -7,15 +7,19 @@ class Coffeemachine:
     price_paid = 0
     coffees = []
     prices = []
+    turned_on = False
 
     def __init__(self, coffees, prices):
-        hs = Homescreen(self)
+        self.hs = Homescreen(self)
 
         for i in range(len(coffees)):
-            self.coffees.append(Coffeescreen(hs, Coffee(coffees[i], prices[i])))
+            self.coffees.append(Coffeescreen(self.hs, Coffee(coffees[i], prices[i])))
 
         self.prices = prices
-        hs.add_coffees(coffees)
+        self.hs.add_coffees(self.coffees)
+
+    def turn_on(self):
+        self.turned_on = True
 
     def pay_cash(self, money):
         """Pay your coffee in cash"""
