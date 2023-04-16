@@ -4,10 +4,9 @@ from code import domain
 class StatesHandler:
     def __init__(self, machine, user):
         self.machine = machine
-        self.person = user
+        self.user = user
 
     def handle(self, state, cargo):
-
         if state == "q0":
             return self.q0(cargo[0], cargo[1:])
         elif state == "q1":
@@ -15,9 +14,9 @@ class StatesHandler:
         elif state == "q2":
             return self.q2(cargo[0], cargo[1:])
         elif state == "q3":
-            return self.q3(None, cargo)
+            return self.q3(cargo)
         elif state == "q4":
-            return self.q4(None, cargo)
+            return self.q4(cargo)
         elif state == "q5":
             return self.q5(cargo[0], cargo[1:])
         else:
@@ -37,11 +36,12 @@ class StatesHandler:
             try:
                 money = float(money)
             except:
-                raise ValueError("This command: '" + command + "' doesn't correctly specify money")
+                raise ValueError("This command: '" + command + "' doesn't correctly specify money.")
 
-            self.machine.pay_cash(money)
-
-            return ["q1", cargo[1:]]
+            if self.user.lose_cash(money):
+                self.machine.pay_cash(money)
+                return ["q1", cargo[1:]]
+            raise ValueError("User doesn't have enough money to pay this amount.")
 
         elif command == "CHANGE":
             self.machine.pay_back_change()
@@ -57,25 +57,33 @@ class StatesHandler:
     def q2(self, command, cargo):
         if command == "PAY":
             money = cargo[0]
-            self.machine.pay_cash(money)
-            return "q2", cargo[1:]
+
+            try:
+                money = float(money)
+            except:
+                raise ValueError("This command: '" + command + "' doesn't correctly specify money.")
+
+            if self.user.lose_cash(money):
+                self.machine.pay_cash(money)
+                return ["q2", cargo[1:]]
+            raise ValueError("User doesn't have enough money to pay this amount.")
 
         elif command == "CHOOSE_DIFFERENT_COFFEE":
             self.machine.hs.unchoose_coffee()
-            return "q1", cargo[1:]
+            return "q1", cargo
 
         elif command == "BUY":
             return "q3", cargo
         else:
             raise ValueError("This command doesn't work.")
 
-    def q3(self, command, cargo):
+    def q3(self, cargo):
         if self.machine.hs.chosen_coffee.pay_coffee():
             return "q4", cargo
         else:
             return "q2", cargo
 
-    def q4(self, command, cargo):
+    def q4(self, cargo):
         self.machine.make_coffee(self.machine.hs.chosen_coffee.coffee.get_name())
         return "q5", cargo
 

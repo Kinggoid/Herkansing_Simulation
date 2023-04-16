@@ -3,7 +3,13 @@ class Person:
         self.name = name
         self.pocket_change = pocket_change
 
-    def pay_cash(self, money):
+    def get_name(self):
+        return self.name
+
+    def get_pocket_change(self):
+        return self.pocket_change
+
+    def lose_cash(self, money):
         if self.pocket_change >= money:
             self.pocket_change -= money
             return True
