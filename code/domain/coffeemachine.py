@@ -37,7 +37,7 @@ class Coffeemachine:
         return change
 
     def make_coffee(self, coffee_name):
-        return True
+        return coffee_name
 
     def __repr__(self):
         return f"Homescreen(price_paid='{self.price_paid}')"
