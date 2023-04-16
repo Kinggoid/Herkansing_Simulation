@@ -12,7 +12,9 @@ class Coffeemachine:
 
         coffee_screens = []
         for i in range(len(coffees)):
-            coffee_screens.append(Coffeescreen(self.hs, Coffee(coffees[i], prices[i])))
+            coffee = Coffee(coffees[i])
+            coffee.add_price(prices[i])
+            coffee_screens.append(Coffeescreen(self.hs, coffee))
         self.hs.add_coffees(coffee_screens)
 
     def turn_on(self):
@@ -32,8 +34,10 @@ class Coffeemachine:
         self.price_paid = 0
         return change
 
-    def make_coffee(self, coffee_name):
-        return coffee_name
+    def make_coffee(self, coffee_name, cafeine, sugar):
+        new_coffee = Coffee(coffee_name)
+        new_coffee.coffee_strength_and_sugar_levels(cafeine, sugar)
+        return new_coffee
 
     def __repr__(self):
         return f"Coffeemachine(price_paid='{self.price_paid}', turned_on='{self.turned_on}')"

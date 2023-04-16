@@ -68,6 +68,14 @@ class StatesHandler:
             return "q1", cargo
         elif command == "BUY":
             return "q3", cargo
+        elif command == "SUGAR":
+            strength = cargo[0]
+            self.machine.hs.chosen_coffee.change_sugar_level(strength)
+            return "q2", cargo[1:]
+        elif command == "CAFEINE":
+            strength = cargo[0]
+            self.machine.hs.chosen_coffee.change_cafeine_level(strength)
+            return "q2", cargo[1:]
         else:
             raise Exception("This command doesn't work.")
 
@@ -78,8 +86,8 @@ class StatesHandler:
             return "q2", cargo
 
     def q4(self, cargo):
-        chosen_coffee_name = self.machine.hs.chosen_coffee.coffee.get_name()
-        made_coffee = self.machine.make_coffee(chosen_coffee_name)
+        chosen_coffee = self.machine.hs.chosen_coffee
+        made_coffee = self.machine.make_coffee(chosen_coffee.coffee.get_name(), chosen_coffee.cafeine, chosen_coffee.sugar)
         self.user.gain_coffee(made_coffee)
         self.machine.hs.unchoose_coffee()
         return "q5", cargo
