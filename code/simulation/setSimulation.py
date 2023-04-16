@@ -7,21 +7,19 @@ class StatesHandler:
         self.person = user
 
     def handle(self, state, cargo):
-        command = cargo[0]
-        cargo = cargo[1:]
 
         if state == "q0":
-            return self.q0(command, cargo)
+            return self.q0(cargo[0], cargo[1:])
         elif state == "q1":
-            return self.q1(command, cargo)
-        # elif state == "q2":
-        #     return self.q0(command, cargo)
-        # elif state == "q3":
-        #     return self.q0(command, cargo)
-        # elif state == "q4":
-        #     return self.q0(command, cargo)
-        # elif state == "q5":
-        #     return self.q0(command, cargo)
+            return self.q1(cargo[0], cargo[1:])
+        elif state == "q2":
+            return self.q2(cargo[0], cargo[1:])
+        elif state == "q3":
+            return self.q3(None, cargo)
+        elif state == "q4":
+            return self.q4(None, cargo)
+        elif state == "q5":
+            return self.q5(cargo[0], cargo[1:])
         else:
             raise ValueError("This command doesn't work.")
 
@@ -50,41 +48,42 @@ class StatesHandler:
             return "q1", cargo
 
         elif command == "CHOOSE_COFFEE":
-            coffee = cargo[1]
+            coffee = cargo[0]
             self.machine.hs.choose_coffee(coffee)
             return "q2", cargo[1:]
         else:
             raise ValueError("This command doesn't work.")
 
+    def q2(self, command, cargo):
+        if command == "PAY":
+            money = cargo[0]
+            self.machine.pay_cash(money)
+            return "q2", cargo[1:]
 
-    # def q2(state, command, cargo):
-    #     if command == "PAY":
-    #         money = cargo[1]
-    #         state.pay_cash(money)
-    #         return state, cargo[2:]
-    #
-    #     elif command == "CHOOSE_DIFFERENT_COFFEE":
-    #         return state.choose_different_coffee, cargo[1:]
-    #
-    #     elif command == "BUY":
-    #         coffee = cargo[1]
-    #         bought_coffee = state.pay_coffee()
-    #         if bought_coffee:
-    #             return state.coffees[coffee], cargo[2:]
-    #         else:
-    #             return state, cargo[2:]
-    #
-    #
-    # def q3(state, command, cargo):
-    #     if command == "CHOOSE_DIFFERENT_COFFEE":
-    #         return state.choose_different_coffee, cargo[1:]
-    #
-    #     elif command == "BUY":
-    #         coffee = cargo[1]
-    #         bought_coffee = state.pay_coffee()
-    #         if bought_coffee:
-    #             return state.coffees[coffee], cargo[2:]
-    #         else:
-    #             return state, cargo[2:]
-    #
-    #
+        elif command == "CHOOSE_DIFFERENT_COFFEE":
+            self.machine.hs.unchoose_coffee()
+            return "q1", cargo[1:]
+
+        elif command == "BUY":
+            return "q3", cargo
+        else:
+            raise ValueError("This command doesn't work.")
+
+    def q3(self, command, cargo):
+        if self.machine.hs.chosen_coffee.pay_coffee():
+            return "q4", cargo
+        else:
+            return "q2", cargo
+
+    def q4(self, command, cargo):
+        self.machine.make_coffee(self.machine.hs.chosen_coffee.coffee.get_name())
+        return "q5", cargo
+
+    def q5(self, command, cargo):
+        if command == "CHANGE":
+            self.machine.pay_back_change()
+            return "q5", cargo
+        elif command == "STOP":
+            return "END", None
+        else:
+            raise ValueError("This command doesn't work.")

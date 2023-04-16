@@ -21,7 +21,7 @@ handler = StatesHandler(cm, harry)
 
 fsm = simulation.StateMachine(cm, handler)
 
-cargo = "TURN_ON.PAY.20.END"
+cargo = "TURN_ON.PAY.20.CHOOSE_COFFEE.CAPPUCHINO.BUY.CHANGE.STOP"
 fsm.run(cargo)
 
 

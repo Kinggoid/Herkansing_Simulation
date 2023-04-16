@@ -4,14 +4,11 @@ class Coffeescreen:
         self.coffee = coffee
 
     def pay_coffee(self):
-        difference = self.hs.get_price_paid() - self.coffee.get_price()
+        difference = self.hs.coffeemachine.get_price_paid() - self.coffee.get_price()
         if difference >= 0:
-            self.hs.new_balance(difference)
+            self.hs.coffeemachine.new_balance(difference)
             return True
         return False
-
-    def choose_different_coffee(self):
-        self.hs.unchoose_coffee()
 
     def __repr__(self):
         return f"Coffeescreen(coffee='{self.coffee.get_name()}', price='{self.coffee.get_price()}', paid='{self.hs.get_price_paid()})"
