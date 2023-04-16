@@ -28,7 +28,8 @@ def main():
 
     # Show results
     print(user)
+    print(cm)
+    print(cm.hs)
 
 
 main()
-
