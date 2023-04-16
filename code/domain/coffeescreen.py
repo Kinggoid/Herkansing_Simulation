@@ -12,5 +12,5 @@ class Coffeescreen:
         return False
 
     def __repr__(self):
-        return f"Coffeescreen(coffee='{self.coffee.get_name()}', price='{self.coffee.get_price()}', paid='{self.hs.get_price_paid()})"
+        return f"Coffeescreen(coffee='{self.coffee.get_name()}', price='{self.coffee.get_price()}')"
 

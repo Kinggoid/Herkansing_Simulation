@@ -36,4 +36,4 @@ class Coffeemachine:
         return coffee_name
 
     def __repr__(self):
-        return f"Coffeemachine(price_paid='{self.price_paid}', coffees='{self.coffees}', prices='{self.prices}', turned_on='{self.turned_on}')"
+        return f"Coffeemachine(price_paid='{self.price_paid}', turned_on='{self.turned_on}')"

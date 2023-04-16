@@ -8,14 +8,8 @@ class Coffee:
     def get_name(self):
         return self.name
 
-    def set_name(self, coffee):
-        self.name = coffee
-
     def get_price(self):
         return self.price
-
-    def set_price(self, price):
-        self.price = price
 
     def __repr__(self):
         return f"Coffee(name='{self.name}', price='{self.price}')"
